@@ -50,9 +50,9 @@ jobs:
           severity: 'HIGH,CRITICAL'
           exit-code: '1'
           format: 'table'
-          
+
   deploy-staging:
-    needs: build
+    needs: security
     runs-on: ubuntu-latest
     environment: staging
     steps:
