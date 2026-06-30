@@ -36,6 +36,21 @@ jobs:
       image-name: devops-app
       context: ./app
 
+        # Stage 3 : Scan de sécurité
+  security:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan application files
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: 'fs'
+          scan-ref: 'app/'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
+          format: 'table'
+          
   deploy-staging:
     needs: build
     runs-on: ubuntu-latest
