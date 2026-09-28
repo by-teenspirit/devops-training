@@ -9,7 +9,20 @@ pratique.
 |---|---|
 | `01-pipeline-cicd.md` | ce qu'est un pipeline CI/CD, les étages, les principes |
 | `02-github-actions.md` | GitHub Actions : workflows, jobs, actions réutilisables |
+| `.github/` | le pipeline mis en place pour de vrai sur ce dépôt |
 | `app/` | l'application de démonstration |
+
+## Le pipeline
+
+`.github/workflows/ci.yml` — « Full DevOps Pipeline », sur `push` et
+`pull_request` vers `main`. Il appelle l'action composite locale
+`.github/actions/setup-tools`, qui installe Terraform et vérifie docker et
+kubectl, puis passe le dépôt au scanner **Trivy**.
+
+`.github/workflows/reusable-docker.yml` est un workflow réutilisable
+(`workflow_call`) : on lui donne un nom d'image, un contexte et un Dockerfile,
+il construit l'image avec le cache GitHub Actions et rend le tag en sortie.
+C'est l'exercice sur la factorisation des workflows.
 
 ## L'application fil rouge
 
